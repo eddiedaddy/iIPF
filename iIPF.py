@@ -19,6 +19,7 @@ class IPF_2dInteger(object):
         self.A = seed[:][:]
         self.intA = []
         self.fA = []
+        self.report = False
         # self.icolsum = []
         # self.irowsum = []
 
@@ -208,8 +209,9 @@ class IPF_2dInteger(object):
         for i in xrange(self.nrow):
             for j in xrange(self.ncol):
                 if matrix[i][j] >= 1.00:
-                    if matrix[i][j] > 1.99:
-                        print 'too concentrated %d %d %f' % (i, j, matrix[i][j])
+                    if self.report:
+                        if matrix[i][j] > 1.99:
+                            print 'too concentrated %d %d %f' % (i, j, matrix[i][j])
 
                     if frow[i] >= 1.0 and fcol[j] >= 1.0:
                         matrix[i][j] = 0
@@ -237,7 +239,8 @@ class IPF_2dInteger(object):
             sumfA, sumfrow, sumfcol = self.nonezerocells_to_ones(frowsum, fcolsum)
             if abs(sumfA) < 1.0e-8 or (sumfrow == 0 and sumfcol==0) : break
             if abs(prev_sumfA - sumfA) > 0.01:
-                print sumfA
+                if self.report:
+                    print sumfA, sumfrow, sumfcol
             prev_sumfA = sumfA
 
 
