@@ -24,8 +24,8 @@ integer values
 This class is to match the integer controls when it is done.  The first "i" represents "integer". The implemented idea is as following
 
 - input :
-  rowsum  (sum of rowsum = sum of colsum = total to be filled in the result matrix in integer)
-  colsum
+  rowsum  (sum of rowsum = sum of colsum = total to be filled in the result matrix in integer),  
+  colsum,  
   seed (matrix)
 
 ### Steps :
