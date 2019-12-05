@@ -1,6 +1,7 @@
 # iIPF
 A IPF (Iterative Proportional Fitting) class that matches controls of row or column, or both. 
 
+## Background
 Iterative Proportional Fitting (IPF) is a method commonly used in modeling, where vectors are expended to matrices.
 For example in transportation modeling, trip origin in column vector and trip destination in row vector are used to create
 an O/D matrix to be fed into traffic assignment step.  Few methods of converting the two vectors to a matrix are used, including
@@ -13,11 +14,13 @@ Socio-economic data development also heavily relies on IPF too.  In many cases, 
 create more meaningfull joint tables, like number of households by size by income, which is not the table available directly from
 the Census, yet highly desired data in urban modeling.
 
+## Method
 The method is alternatively matching the sums of rows and columns as adjusting the cell values in the matrix.  Overall the matching
 is improved as the iterations go on.  But in any case, it is hard, if possible, to match the all of row sums and column sum together,
 especially if the controls (row margins and column margins) are in integers, as well as the expected result is also a matrix of
 integer values
 
+### Input
 This class is to match the integer controls when it is done.  The first "i" represents "integer". The implemented idea is as following
 
 - input :
@@ -25,7 +28,7 @@ This class is to match the integer controls when it is done.  The first "i" repr
   colsum
   seed (matrix)
 
-- steps :
+### Steps :
 1) perform normal IPF with real numbers
 2) separate the "real" matrix to "integer" and "fractional" matrices.
 3) make new colsum and rowsum vectors from the "fractional" matrix.  Since the sums should be integers too.
