@@ -221,7 +221,58 @@ class IPF_2dInteger(object):
                         xsum += 1
         return xsum
 
+    # a method that matches the colsums by the bucket roundings
+    def iIPF_column_base(self):
+        main_iteration = self.fIPF(self.A, self.rowsum, self.colsum)
 
+        imat = []
+        for i in range(self.nrow):
+            imat.append([0] * self.ncol)
+
+        for j in range(self.ncol):
+            if self.colsum[j] == 0: continue
+            sumfcol = 0.0
+            for i in range(self.nrow):
+                sumfcol += self.A[i][j]
+
+            rate = self.colsum[j] / sumfcol
+            residual = 0.0
+            for i in range(self.nrow):
+                fvalue = self.A[i][j] * rate
+                ivalue = int(fvalue)
+                if residual + fvalue - ivalue >= 0.5:
+                    ivalue += 1
+                residual += fvalue - ivalue
+                imat[i][j] = ivalue
+
+        self.intA = imat
+        return
+
+    def iIPF_row_base(self):
+        main_iteration = self.fIPF(self.A, self.rowsum, self.colsum)
+        
+        imat = []
+        for i in range(self.nrow):
+            imat.append([0] * self.nrow)
+            
+            if self.rowsum[i] == 0: continue
+            sumfrow = 0.0
+            for j in range(self.ncol):
+                sumfrow += self.A[i][j]
+                
+            rate = self.rowsum[i] / sumfrow
+            residual = 0.0
+            for j in range(self.ncol):
+                fvalue = self.A[i][j] * rate
+                ivalue = int(fvalue)
+                if residual + fvalue - ivalue >= 0.5:
+                    ivalue += 1
+                residual += fvalue - ivalue
+                image[i][j] = ivalue
+                
+        self.intA = imat
+        return
+            
     # after fIPF, integerize the seed values, while keeping the sum of them to match rowsum and colsum
     def iIPF(self):
         main_iteration = self.fIPF(self.A, self.rowsum, self.colsum)
